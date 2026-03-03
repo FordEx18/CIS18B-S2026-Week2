@@ -37,17 +37,18 @@ public class App {
         for(SecurityAlert alert: highAlerts){
             System.out.println("- "+ alert.id()+ ": "+ alert.sourceSystem()+ " - "+ alert.description());
         }
-        
-
-
-
+        //Demonstrate finding by ID
+        var foundAlert = manager.findById("2");
+        foundAlert.ifPresent(alert -> System.out.println("Found Alert with ID 2: " + alert.description()));
+        System.out.println("Recommended Actions:"+ manager.getSeverityRecommendation(alert4));
         // TODO: Print formatted report using text block
-        /*
+        int total = 4;
+        int highCount = highAlerts.size();
+        // Use text block for report
         System.out.println("""
             === SECURITY ALERT REPORT ===
             Total Alerts: %d
             High Severity Alerts: %d
             """.formatted(total, highCount));
-        */
     }
 }

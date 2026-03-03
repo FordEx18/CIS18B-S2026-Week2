@@ -87,13 +87,17 @@ public class SecurityAlertManager {
             throw new IllegalArgumentException("Alert cannot be null");
         }
         //Pattern matching with instanceof
-        if(alert instanceof SecurityAlert sa){
-            //Modern switch expression
+        if (alert instanceof SecurityAlert sa) {
+            // Modern switch expression
             return switch (sa.severity().toLowerCase()) {
                 case "low" -> "Log and monitor.";
                 case "medium" -> "Investigate within 24 hours.";
                 case "high" -> "Escalate to engineering.";
                 case "critical" -> "Immediate incident response required.";
                 default -> throw new IllegalArgumentException("Unknown severity: " + sa.severity());
+            };
+        }
+        // This point should never be reached since alert is non-null SecurityAlert
+        throw new IllegalStateException("Unexpected alert type");
     }
 }
