@@ -11,25 +11,25 @@ import java.util.List;
 public class LanguageBasicsReview {
     //Variables
     private String User;
-    private float balance;
-    //Constructor
-    public LanguageBasicsReview(String user, float balance){
+    private double balance;
+    //two-arg Constructor
+    public LanguageBasicsReview(String user, double balance){
         this.User = user;
         this.balance = balance;
     }
     //Deposit function
-    public void deposit(float amount){
+    public void deposit(double amount){
         balance+=amount;
         System.out.println("Deposited $" + amount);
     }
     //Overload Deposit
-    public void deposit(float amount, String note){
+    public void deposit(double amount, String note){
         balance+=amount;
         System.out.println("Deposited $" + amount +" | Note: "+ note);
     }
     //withdraw Function
-    public void withdraw(float amount)throws InsufficientFundsException{
-        if(amount<balance){
+    public void withdraw(double amount)throws InsufficientFundsException{
+        if(amount>balance){
             throw new InsufficientFundsException("Not enough funds in account!");
         }else{
             balance-=amount;
@@ -37,22 +37,59 @@ public class LanguageBasicsReview {
         }
     }
     //Calculate interest Function
-    public static float calculateInterest(float balance, float rate){
+    public static double calculateInterest(double balance, double rate){
         return balance*rate;
     } 
     //Getter
-    public float getBalance(){
+    public double getBalance(){
         return balance;
     }
-}
-
-
-
-
     //Custom Exception Class
     class InsufficientFundsException extends Exception{
         public InsufficientFundsException(String message){
             super(message);
         }
+    }
+    //Demonstrate All Functions
+    public void demonstrate(){
+        //Create Var
+        var account = new LanguageBasicsReview("Joe", 500.00f);
+        //List using list.of
+        List<String>transactionTypes=List.of("DEPOSIT","WITHDRAW","INTEREST");
+        System.out.println("Possible Transactions: "+ transactionTypes);
+        System.out.println("Current Balance: $" + account.getBalance());
+        System.out.println();
+        //Modern Switch expression
+        String transaction = "DEPOSIT";
+        switch(transaction){
+            case "DEPOSIT" -> account.deposit(300, "Paycheck");
+            case "WITHDRAW"-> {
+                try{
+                    account.withdraw(200);
+                }catch(InsufficientFundsException e){
+                    System.out.println("Error: " +e.getMessage());
+                }
+            }
+            case "INTEREST"-> {
+                double interest = calculateInterest(account.getBalance(), 0.05);
+                account.deposit(interest, "Monthly Interest");
+            }
+            default -> System.out.println("Invalid Transaction Type!");
+        }
+        //Display Final Balance
+        System.out.println();
+        System.out.println("Final Balance: $" + account.getBalance());
+        //Example Try/catch exception
+        System.out.println();
+        System.out.println("Attempting large withdrawal...");
+        try{
+            account.withdraw(5000);
+        }catch(InsufficientFundsException e){
+            System.out.println("Caught Exception: " + e.getMessage());
+        }
+        System.out.println("Final Balance: $" + account.getBalance());
+    }
+    public static void main(String[] args){
+        new LanguageBasicsReview("Demo", 0).demonstrate();
     }
 }
