@@ -12,6 +12,11 @@ public class LanguageBasicsReview {
     //Variables
     private String User;
     private double balance;
+    //No-arg Constructor
+    public LanguageBasicsReview(){
+        this.User = "Default User";
+        this.balance = 0.0;
+    }
     //two-arg Constructor
     public LanguageBasicsReview(String user, double balance){
         this.User = user;
@@ -89,7 +94,8 @@ public class LanguageBasicsReview {
         }
         System.out.println("Final Balance: $" + account.getBalance());
     }
+    //Main Method to run demonstration
     public static void main(String[] args){
-        new LanguageBasicsReview("Demo", 0).demonstrate();
+        new LanguageBasicsReview().demonstrate();
     }
 }
